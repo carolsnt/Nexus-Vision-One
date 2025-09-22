@@ -134,7 +134,7 @@ function loadDashboard(container, titleEl, subtitleEl) {
                         <i class="fas fa-server mr-1"></i>1,234 hoje
                     </p>
                 </div>
-                <div class="status-icon" style="background: linear-gradient(135deg, var(--accent), #a855f7);">
+                <div class="status-icon" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">
                     <i class="fas fa-file-alt"></i>
                 </div>
             </div>
@@ -162,8 +162,8 @@ function loadDashboard(container, titleEl, subtitleEl) {
                 </div>
             </div>
             
-            <div id="uploadStatus" class="text-center mt-4 hidden">
-                <p class="text-green-400"><i class="fas fa-check-circle mr-2"></i> Arquivo carregado com sucesso!</p>
+            <div id="uploadStatus" class="mt-4 hidden">
+                <!-- Aqui será exibido o status da análise -->
             </div>
         </div>
 
@@ -391,17 +391,221 @@ function setupUploadArea() {
             return;
         }
         
-        // Simular upload bem-sucedido
-        uploadStatus.classList.remove('hidden');
-        
-        // Ocultar mensagem após 3 segundos
-        setTimeout(() => {
-            uploadStatus.classList.add('hidden');
-        }, 3000);
-        
-        // Aqui você adicionaria a lógica real de upload
-        console.log('Arquivo selecionado:', file.name);
+        // Mostrar mensagem de análise
+        showAnalysisMessage(file.name);
     }
+}
+
+// Nova função para mostrar mensagem de análise
+function showAnalysisMessage(filename) {
+    const uploadArea = document.getElementById('uploadArea');
+    const uploadStatus = document.getElementById('uploadStatus');
+    
+    // Ocultar área de upload e mostrar status
+    uploadArea.classList.add('hidden');
+    uploadStatus.classList.remove('hidden');
+    uploadStatus.innerHTML = `
+        <div class="analysis-progress">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="text-blue-400 mt-2">
+                <i class="fas fa-search mr-2"></i>Analisando "${filename}" e detectando ameaças...
+            </p>
+        </div>
+    `;
+    
+    // Simular análise após 5 segundos
+    setTimeout(() => {
+        showAnalysisResults(filename);
+    }, 5000);
+}
+
+// Nova função para mostrar resultados da análise
+function showAnalysisResults(filename) {
+    const uploadStatus = document.getElementById('uploadStatus');
+    
+    uploadStatus.innerHTML = `
+        <div class="analysis-results animate-fadeIn">
+            <p class="text-green-400 mb-4">
+                <i class="fas fa-check-circle mr-2"></i>Arquivo lido com sucesso. Diagnóstico Inicial – Problemas Identificados
+            </p>
+            
+            <div class="threats-list space-y-4">
+                <div class="threat-item glass-card p-4">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h4 class="font-semibold text-red-400">1º Erro: nsUtils get network list, err:5</h4>
+                            <p class="text-sm text-gray-400 mt-1">Fonte: Anon1_anon.txt</p>
+                            <p class="text-sm mt-2">Descrição: Agente falha ao recuperar lista de redes.</p>
+                            <p class="text-sm mt-1">Impacto: Pode afetar monitoramento e resposta de rede.</p>
+                        </div>
+                        <span class="threat-level threat-critical">Crítico</span>
+                    </div>
+                </div>
+                
+                <div class="threat-item glass-card p-4">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h4 class="font-semibold text-orange-400">2º Erro: CTunnelMgr No tunnel found + PAC/Proxy Error</h4>
+                            <p class="text-sm text-gray-400 mt-1">Fonte: Anon2_anon.txt</p>
+                            <p class="text-sm mt-2">Descrição: Falha na criação de túnel seguro e na detecção de configuração de proxy.</p>
+                            <p class="text-sm mt-1">Impacto: Interrupção da comunicação segura e aplicações bloqueadas.</p>
+                        </div>
+                        <span class="threat-level threat-high">Alto</span>
+                    </div>
+                </div>
+                
+                <div class="threat-item glass-card p-4">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h4 class="font-semibold text-yellow-400">3º Erro: PSMRC045E Video finalize utility failed</h4>
+                            <p class="text-sm text-gray-400 mt-1">Fonte: Anon3_anon.txt e Anon4_anon_v3.txt</p>
+                            <p class="text-sm mt-2">Descrição: Falhas na finalização de gravações de sessões privilegiadas.</p>
+                            <p class="text-sm mt-1">Impacto: Compromete auditoria e rastreamento de atividades.</p>
+                        </div>
+                        <span class="threat-level threat-medium">Médio</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <p class="text-lg font-semibold mb-4">Deseja aplicar correção?</p>
+                <div class="flex justify-center space-x-4">
+                    <button id="applyFix" class="btn-primary">Sim</button>
+                    <button id="cancelFix" class="btn-outline">Não</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Configurar eventos dos botões
+    document.getElementById('applyFix').addEventListener('click', startFixProcess);
+    document.getElementById('cancelFix').addEventListener('click', resetUploadArea);
+}
+
+// Nova função para iniciar processo de correção
+function startFixProcess() {
+    const uploadStatus = document.getElementById('uploadStatus');
+    
+    uploadStatus.innerHTML = `
+        <div class="fix-process animate-fadeIn">
+            <div class="text-center mb-6">
+                <h3 class="text-lg font-semibold orbitron mb-2">Aplicando Correções</h3>
+                <p class="text-gray-400">Sistema está corrigindo as vulnerabilidades identificadas</p>
+            </div>
+            
+            <div class="fix-steps space-y-4">
+                <div class="fix-step glass-card p-4">
+                    <div class="flex items-center">
+                        <div class="step-icon mr-4">
+                            <i class="fas fa-tools text-blue-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold">1º Erro – Network List Error</h4>
+                            <ul class="text-sm mt-2 ml-4 list-disc text-gray-400">
+                                <li>Executar agente como SYSTEM ou administrador</li>
+                                <li>Atualizar driver da placa de rede</li>
+                                <li>Reinstalar ou atualizar o agente Netskope</li>
+                            </ul>
+                        </div>
+                        <div class="step-status">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fix-step glass-card p-4">
+                    <div class="flex items-center">
+                        <div class="step-icon mr-4">
+                            <i class="fas fa-network-wired text-orange-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold">2º Erro – Tunnel/Proxy</h4>
+                            <ul class="text-sm mt-2 ml-4 list-disc text-gray-400">
+                                <li>Resetar configurações de proxy: netsh winhttp reset proxy</li>
+                                <li>Garantir acesso à URL do PAC no navegador</li>
+                                <li>Validar se o domínio está whitelisted no proxy</li>
+                                <li>Corrigir erros 403 via log de firewall</li>
+                            </ul>
+                        </div>
+                        <div class="step-status">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fix-step glass-card p-4">
+                    <div class="flex items-center">
+                        <div class="step-icon mr-4">
+                            <i class="fas fa-video text-yellow-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold">3º Erro – Falha no PSM (CyberArk)</h4>
+                            <ul class="text-sm mt-2 ml-4 list-disc text-gray-400">
+                                <li>Verificar espaço em disco na pasta de gravação</li>
+                                <li>Reiniciar serviço CyberArk PSM Recorder</li>
+                                <li>Aplicar patch da versão mais recente</li>
+                                <li>Rodar script para detectar arquivos AVI corrompidos</li>
+                            </ul>
+                        </div>
+                        <div class="step-status">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Simular processo de correção
+    simulateFixProcess();
+}
+
+// Nova função para simular processo de correção
+function simulateFixProcess() {
+    const steps = document.querySelectorAll('.fix-step');
+    
+    steps.forEach((step, index) => {
+        setTimeout(() => {
+            const statusElement = step.querySelector('.step-status');
+            statusElement.innerHTML = '<i class="fas fa-check-circle text-green-400"></i>';
+        }, (index + 1) * 2000);
+    });
+    
+    // Mostrar mensagem de conclusão após todos os passos
+    setTimeout(() => {
+        showFixComplete();
+    }, steps.length * 2000 + 1000);
+}
+
+// Nova função para mostrar conclusão da correção
+function showFixComplete() {
+    const uploadStatus = document.getElementById('uploadStatus');
+    
+    uploadStatus.innerHTML = `
+        <div class="fix-complete text-center animate-fadeIn">
+            <div class="success-icon mb-4">
+                <i class="fas fa-check-circle text-green-400" style="font-size: 3rem;"></i>
+            </div>
+            <h3 class="text-xl font-semibold orbitron mb-2">Correção aplicada com sucesso!</h3>
+            <p class="text-gray-400 mb-6">Todas as vulnerabilidades foram corrigidas</p>
+            <button id="backToUpload" class="btn-primary">Voltar ao Upload</button>
+        </div>
+    `;
+    
+    document.getElementById('backToUpload').addEventListener('click', resetUploadArea);
+}
+
+// Nova função para resetar a área de upload
+function resetUploadArea() {
+    const uploadArea = document.getElementById('uploadArea');
+    const uploadStatus = document.getElementById('uploadStatus');
+    const fileInput = document.getElementById('fileInput');
+    
+    uploadArea.classList.remove('hidden');
+    uploadStatus.classList.add('hidden');
+    fileInput.value = '';
 }
 
 // Configurar chat IA
@@ -484,8 +688,8 @@ function setupChat() {
 // Configurar responsividade da sidebar
 function setupSidebarResponsive() {
     const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
     
     if (sidebarToggle && sidebar && mainContent) {
         sidebarToggle.addEventListener('click', function() {
