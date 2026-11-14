@@ -1,34 +1,7 @@
 # Nexus Vision One
 
-
-```md
-<div align="center">
-
-# Nexus Vision One
-
 Um dashboard de demonstração para monitoramento, análise e visualização de segurança digital.
 
-<a href="https://github.com/carolsnt/nexus">
-  <img src="https://img.shields.io/badge/status-prot%C3%B3tipo-8b5cf6?style=for-the-badge" alt="Status: protótipo">
-</a>
-<img src="https://img.shields.io/badge/JavaScript-71.8%25-f7df1e?style=for-the-badge&logo=javascript&logoColor=111827" alt="JavaScript 71.8%">
-<img src="https://img.shields.io/badge/CSS-20.7%25-663399?style=for-the-badge&logo=css3&logoColor=white" alt="CSS 20.7%">
-<img src="https://img.shields.io/badge/HTML-7%25-e34f26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML 7%">
-<img src="https://img.shields.io/badge/TypeScript-0.5%25-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript 0.5%">
-
-<p><strong>Visualização interativa para cenários de segurança, detecção e análise de logs.</strong></p>
-
-<p>
-  <a href="#preview">Preview</a> ·
-  <a href="#funcionalidades">Funcionalidades</a> ·
-  <a href="#arquitetura">Arquitetura</a> ·
-  <a href="#execução">Execução</a> ·
-  <a href="#observações">Observações</a>
-</p>
-
-</div>
-
----
 
 ## Sobre o projeto
 
@@ -45,17 +18,6 @@ A interface foi construída para simular um ambiente de segurança com:
 
 > Este projeto é uma interface de demonstração. Os indicadores, relatórios e eventos exibidos são exemplos ilustrativos e não representam dados reais de produção.
 
----
-
-## Preview
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/carolsnt/nexus/main/assets/nexus-preview.svg" alt="Preview do dashboard Nexus Vision One" width="100%" />
-</p>
-
-*Ilustração conceitual da interface, com dados fictícios e fins demonstrativos.*
-
----
 
 ## Funcionalidades
 
@@ -68,7 +30,6 @@ A interface foi construída para simular um ambiente de segurança com:
 - **Layout responsivo** para desktop e mobile
 - **Tema visual escuro** com estilo moderno e futurista
 
----
 
 ## Stack tecnológica
 
@@ -88,11 +49,9 @@ A interface foi construída para simular um ambiente de segurança com:
 - Tailwind CSS
 - ESLint
 
----
 
 ## Arquitetura
 
-```text
 .
 ├── assets/
 │   ├── nexus-banner.svg
@@ -119,9 +78,7 @@ A interface foi construída para simular um ambiente de segurança com:
 │       └── index.js
 ├── README.md
 └── LICENSE (se for adicionada futuramente)
-```
 
----
 
 ## Execução
 
@@ -169,7 +126,6 @@ Para validar o código com lint:
 npm run lint
 ```
 
----
 
 ## Integração real de análise
 
@@ -183,7 +139,6 @@ Esse fluxo espera uma resposta em JSON com a propriedade `analysis`.
 
 No entanto, **o backend responsável por essa análise não está incluído neste repositório**. Para que a análise real de logs funcione em produção, é necessário implementar um serviço backend compatível com autenticação, validação, armazenamento e processamento.
 
----
 
 ## Observações
 
@@ -197,7 +152,6 @@ Alguns elementos são intencionalmente demonstrativos:
 - chat com respostas locais
 - integração real com IA ou threat intelligence ainda não implementada
 
----
 
 ## Segurança e uso responsável
 
@@ -212,25 +166,9 @@ Antes de usar esse projeto em um ambiente real, implemente:
 
 Não compartilhe dados pessoais, credenciais, tokens ou informações confidenciais em ambientes sem proteção adequada.
 
----
 
 ## Contribuição
 
 Contribuições são bem-vindas. Se você quiser melhorar a interface, expandir as funcionalidades ou ajustar a experiência do usuário, abra uma issue ou envie um pull request com a descrição do que foi alterado.
 
----
-
-## Licença
-
-Este repositório ainda não especifica uma licença. Caso seja necessário usar em produção ou distribuir publicamente, recomenda-se adicionar uma licença formal ao projeto.
-
----
-
-Se quiser, também posso te entregar uma segunda versão ainda mais premium do README, com:
-- badges mais modernos
-- capa com SVG prontos
-- seção de screenshots
-- layout mais “GitHub showcase”
-- versão em inglês e em português
-```
 
